@@ -5,6 +5,12 @@ Welcome to the official repository and source code package for **HIL Biomedicals
 
 ---
 
+### 🌐 Official Links
+- **GitHub Repository:** [https://github.com/noasido/hil-biomedicals-portfolio](https://github.com/noasido/hil-biomedicals-portfolio)
+- **Live Interactive Portfolio (GitHub Pages):** [https://noasido.github.io/hil-biomedicals-portfolio/](https://noasido.github.io/hil-biomedicals-portfolio/)
+
+---
+
 ### 📂 Deliverables & Repository Structure
 
 | File | Type | Description |
@@ -14,7 +20,8 @@ Welcome to the official repository and source code package for **HIL Biomedicals
 | `HIL_Biomedicals_Complete_Brochure_8Pages.pdf` | Document (PDF) | High-resolution, 8-page compiled corporate brochure covering all software modules and medical equipment categories. |
 | `hil_biomedicals_ecard.html` | HTML5 Document | 1-page corporate flyer and digital business card optimized for quick overview and scanning. |
 | `HIL_Biomedicals_Flyer_ECard.pdf` | Document (PDF) | Vector-quality 1-page corporate flyer PDF ready for distribution or printing. |
-| `qr_code.png` | Image Asset | Scannable QR code asset linking to the digital portfolio. |
+| `qr_code.png` | Image Asset | Scannable QR code asset linking directly to `https://noasido.github.io/hil-biomedicals-portfolio/`. |
+| `qr_code.svg` | Vector Asset | Scalable SVG QR code. |
 
 ---
 
@@ -51,11 +58,11 @@ This project is built using modern, pure **HTML5, CSS3, and Vanilla JavaScript (
 
 ### 🌐 Live Deployment via GitHub Pages
 
-This repository is optimized for deployment via **GitHub Pages**:
+This repository is configured for deployment via **GitHub Pages**:
 1. In your GitHub repository, navigate to **Settings** > **Pages**.
 2. Under **Build and deployment**, set **Source** to `Deploy from a branch`.
 3. Select branch `main` and folder `/ (root)`, then click **Save**.
-4. The live site will be accessible at: `https://<username>.github.io/<repository-name>/`.
+4. The live site will be accessible at: `https://noasido.github.io/hil-biomedicals-portfolio/`.
 
 ---
 
