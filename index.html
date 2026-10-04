@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HIL Biomedicals & Systems Ltd | Interactive Digital Portfolio & Downloads</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0a2540;
+      --primary-light: #16385d;
+      --accent: #00d4b2;
+      --accent-glow: rgba(0, 212, 178, 0.25);
+      --secondary: #0066f5;
+      --dark: #061527;
+      --light: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 16px;
+      --shadow: 0 10px 25px -5px rgba(10, 37, 64, 0.08), 0 8px 10px -6px rgba(10, 37, 64, 0.05);
+      --shadow-lg: 0 20px 35px -5px rgba(10, 37, 64, 0.15), 0 10px 15px -5px rgba(10, 37, 64, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f1f5f9;
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Modal / Welcome Prompt */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(6, 21, 39, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 1;
+      visibility: visible;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 16px;
+    }
+
+    .modal-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .prompt-card {
+      background: #ffffff;
+      max-width: 550px;
+      width: 100%;
+      border-radius: 24px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+      transform: scale(1);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.hidden .prompt-card { transform: scale(0.92); }
+
+    .prompt-header {
+      background: linear-gradient(135deg, var(--primary) 0%, #0d3b66 100%);
+      color: white;
+      padding: 28px 24px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .company-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 212, 178, 0.15);
+      border: 1px solid rgba(0, 212, 178, 0.4);
+      color: var(--accent);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .prompt-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .prompt-subtitle {
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+
+    .prompt-body {
+      padding: 24px;
+    }
+
+    .prompt-instruction {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 18px;
+      font-weight: 600;
+    }
+
+    .prompt-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .prompt-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .prompt-btn:hover {
+      border-color: var(--secondary);
+      background: #f0f7ff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px -3px rgba(0, 102, 245, 0.15);
+    }
+
+    .prompt-btn.highlight {
+      background: linear-gradient(135deg, rgba(0, 212, 178, 0.08), rgba(0, 102, 245, 0.08));
+      border-color: var(--accent);
+    }
+
+    .btn-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      background: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      flex-shrink: 0;
+    }
+
+    .btn-text h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+
+    .btn-text p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .btn-arrow {
+      color: var(--secondary);
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: transform 0.2s ease;
+    }
+
+    .prompt-btn:hover .btn-arrow { transform: translateX(4px); }
+
+    .prompt-footer {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .prompt-footer a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    /* Main Page Container */
+    header {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+      color: white;
+      padding: 36px 20px 65px;
+      position: relative;
+    }
+
+    .nav-bar {
+      max-width: 1200px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .logo-symbol {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--accent), var(--secondary));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.3rem;
+      color: var(--dark);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .brand-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .brand-title span {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-action:hover {
+      background: white;
+      color: var(--primary);
+    }
+
+    .btn-action.download {
+      background: var(--accent);
+      color: var(--dark);
+      border-color: var(--accent);
+      font-weight: 700;
+    }
+
+    .btn-action.download:hover {
+      background: #00fadc;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-tagline {
+      display: inline-block;
+      background: rgba(0, 212, 178, 0.15);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 5px 16px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    .hero-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .hero-headline span {
+      background: linear-gradient(135deg, #ffffff 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: #cbd5e1;
+      max-width: 720px;
+      margin: 0 auto 24px;
+    }
+
+    .hero-downloads {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero-dl {
+      background: var(--accent);
+      color: var(--dark);
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(0, 212, 178, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .btn-hero-dl:hover {
+      background: #00fadc;
+      transform: translateY(-2px);
+    }
+
+    .btn-hero-sec {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-hero-sec:hover {
+      background: white;
+      color: var(--primary);
+    }
+
+    /* Tab Filter Bar */
+    .filter-wrapper {
+      max-width: 1200px;
+      margin: -30px auto 40px;
+      padding: 0 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .tabs-container {
+      background: white;
+      padding: 8px;
+      border-radius: 999px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    .tab-item {
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .tab-item.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(10, 37, 64, 0.25);
+    }
+
+    /* Content Sections */
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 26px;
+    }
+
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 50px;
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--secondary);
+    }
+
+    .card-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .badge-software { background: #e0f2fe; color: #0369a1; }
+    .badge-equipment { background: #dcfce7; color: #15803d; }
+    .badge-integration { background: #f3e8ff; color: #7e22ce; }
+
+    .card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .feature-list li {
+      font-size: 0.86rem;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 0.92rem;
+      background: #ecfdf5;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Integration Highlight Box */
+    .integration-box {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+      color: white;
+      border-radius: 24px;
+      padding: 38px;
+      margin-bottom: 50px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .integ-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 32px;
+    }
+
+    .integ-header h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.85rem;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .integ-header p {
+      color: #94a3b8;
+      font-size: 0.98rem;
+    }
+
+    .integ-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .flow-node {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 18px 22px;
+      text-align: center;
+      min-width: 220px;
+    }
+
+    .flow-node h5 {
+      font-size: 1.05rem;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .flow-node p {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+    }
+
+    .flow-arrow {
+      font-size: 1.4rem;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    /* Contact Strip */
+    .contact-strip {
+      background: white;
+      border-radius: 24px;
+      padding: 36px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .contact-details h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.45rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .contact-details p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    .contact-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--secondary);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(0, 102, 245, 0.25);
+    }
+
+    .btn-whatsapp {
+      background: #25d366;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    footer {
+      background: var(--dark);
+      color: #94a3b8;
+      text-align: center;
+      padding: 26px 20px;
+      font-size: 0.82rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    @media (max-width: 768px) {
+      .hero-headline { font-size: 2rem; }
+      .prompt-card { border-radius: 20px; }
+      .flow-arrow { transform: rotate(90deg); }
+      .integ-flow { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WELCOME PROMPT MODAL (Appears on QR Code Scan) -->
+  <div class="modal-overlay" id="welcomeModal">
+    <div class="prompt-card">
+      <div class="prompt-header">
+        <div class="company-badge">Bridging Engineering & Medicine</div>
+        <h2 class="prompt-title">HIL Biomedicals & Systems</h2>
+        <p class="prompt-subtitle">Healthcare Software & Medical Equipment Portfolio</p>
+      </div>
+      
+      <div class="prompt-body">
+        <p class="prompt-instruction">Welcome! Please choose what you would like to explore or download:</p>
+        
+        <div class="prompt-options">
+          
+          <!-- Download Full 8-Page Brochure -->
+          <a href="HIL_Biomedicals_Complete_Brochure_8Pages.pdf" download="HIL_Biomedicals_Complete_Brochure_8Pages.pdf" class="prompt-btn highlight">
+            <div class="btn-left">
+              <div class="btn-icon">📄</div>
+              <div class="btn-text">
+                <h4>Download Complete 8-Page Brochure (PDF)</h4>
+                <p>Full official catalogue with software, specs & equipment</p>
+              </div>
+            </div>
+            <div class="btn-arrow">↓</div>
+          </a>
+
+          <!-- Download E-Card / Flyer -->
+          <a href="HIL_Biomedicals_Flyer_ECard.pdf" download="HIL_Biomedicals_Flyer_ECard.pdf" class="prompt-btn">
+            <div class="btn-left">
+              <div class="btn-icon">🖨️</div>
+              <div class="btn-text">
+                <h4>Download Corporate Flyer / E-Card (PDF)</h4>
+                <p>Executive 1-page summary with QR & credentials</p>
+              </div>
+            </div>
+            <div class="btn-arrow">↓</div>
+          </a>
+
+          <!-- Software Section -->
+          <a href="#software-section" class="prompt-btn" onclick="closeModal('software')">
+            <div class="btn-left">
+              <div class="btn-icon">💻</div>
+              <div class="btn-text">
+                <h4>Explore Software Solutions</h4>
+                <p>EMR, HMIS, RIS, PACS, LIMS & Facility Systems</p>
+              </div>
+            </div>
+            <div class="btn-arrow">→</div>
+          </a>
+
+          <!-- Equipment Section -->
+          <a href="#equipment-section" class="prompt-btn" onclick="closeModal('equipment')">
+            <div class="btn-left">
+              <div class="btn-icon">🏥</div>
+              <div class="btn-text">
+                <h4>Explore Medical Equipment</h4>
+                <p>Imaging (CT/MRI/X-Ray), Analyzers & ICU Assets</p>
+              </div>
+            </div>
+            <div class="btn-arrow">→</div>
+          </a>
+
+          <!-- WhatsApp Chat -->
+          <a href="https://wa.me/233303972481?text=Hello%20HIL%20Biomedicals,%20I%20scanned%20your%20portfolio%20and%20would%20like%20to%20inquire." target="_blank" class="prompt-btn">
+            <div class="btn-left">
+              <div class="btn-icon">💬</div>
+              <div class="btn-text">
+                <h4>Instant WhatsApp Inquiries</h4>
+                <p>Chat directly with our solutions engineering team</p>
+              </div>
+            </div>
+            <div class="btn-arrow">→</div>
+          </a>
+
+        </div>
+
+        <div class="prompt-footer">
+          <span>📍 Abeka-Lapaz, Accra, Ghana</span>
+          <a href="javascript:void(0)" onclick="closeModal('all')">View Full Portfolio ↓</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN PORTFOLIO WEBSITE -->
+  <header>
+    <div class="nav-bar">
+      <a href="#" class="brand-logo">
+        <div class="logo-symbol">H</div>
+        <div class="brand-title">
+          HIL BIOMEDICALS
+          <span>& Systems Ltd • Ghana</span>
+        </div>
+      </a>
+      <div class="nav-actions">
+        <a href="HIL_Biomedicals_Complete_Brochure_8Pages.pdf" download class="btn-action download">📄 Download Brochure</a>
+        <a href="HIL_Biomedicals_Flyer_ECard.pdf" download class="btn-action">🖨️ Download Flyer</a>
+        <button class="btn-action" onclick="openModal()">🎯 Menu Prompt</button>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-tagline">Bridging the Engineering-Medicine Gap</div>
+      <h1 class="hero-headline">One Unified Partner for <span>Software & Medical Devices</span></h1>
+      <p class="hero-desc">Connecting hospital clinical workflows, digital records, radiology, laboratories, and physical biomedical equipment across Ghana and West Africa.</p>
+      
+      <div class="hero-downloads">
+        <a href="HIL_Biomedicals_Complete_Brochure_8Pages.pdf" download class="btn-hero-dl">
+          📥 Download Full 8-Page Brochure (PDF)
+        </a>
+        <a href="HIL_Biomedicals_Flyer_ECard.pdf" download class="btn-hero-sec">
+          📄 Download Corporate Flyer (PDF)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Filter Tabs -->
+  <div class="filter-wrapper">
+    <div class="tabs-container">
+      <button class="tab-item active" onclick="filterCategory('all', this)">All Solutions</button>
+      <button class="tab-item" onclick="filterCategory('software', this)">💻 Software & Digital Health</button>
+      <button class="tab-item" onclick="filterCategory('equipment', this)">🏥 Medical Equipment</button>
+      <button class="tab-item" onclick="filterCategory('integration', this)">⚡ Device Integration</button>
+    </div>
+  </div>
+
+  <main class="main-container">
+    
+    <!-- SOFTWARE SECTION -->
+    <div id="software-section" class="category-block">
+      <h2 class="section-title">💻 Digital Health & Software Solutions</h2>
+      <p class="section-subtitle">Core software systems that automate patient records, hospital operations, and diagnostic data.</p>
+      
+      <div class="grid-3col">
+        <!-- EMR -->
+        <div class="card">
+          <span class="card-badge badge-software">Clinical Records</span>
+          <h3 class="card-title">EMR Systems</h3>
+          <p class="card-desc">Electronic Medical Records for seamless clinical workflows and complete patient history.</p>
+          <ul class="feature-list">
+            <li>Digital Patient Registration & Charts</li>
+            <li>Consultation & Clinical Notes</li>
+            <li>E-Prescriptions & Pharmacy Orders</li>
+            <li>Diagnoses & Treatment Plans</li>
+          </ul>
+        </div>
+
+        <!-- HMIS -->
+        <div class="card">
+          <span class="card-badge badge-software">Hospital Operations</span>
+          <h3 class="card-title">HMIS Suite</h3>
+          <p class="card-desc">Comprehensive Hospital Management Information System for hospital-wide coordination.</p>
+          <ul class="feature-list">
+            <li>Admissions, Discharges & Transfers (ADT)</li>
+            <li>Billing, Invoicing & Insurance (NHIS)</li>
+            <li>Departmental Workflows & Shift Roster</li>
+            <li>Executive Reporting & Analytics</li>
+          </ul>
+        </div>
+
+        <!-- RIS & PACS -->
+        <div class="card">
+          <span class="card-badge badge-software">Radiology & Imaging</span>
+          <h3 class="card-title">RIS & PACS</h3>
+          <p class="card-desc">Radiology Information Systems combined with Picture Archiving for instant medical imaging access.</p>
+          <ul class="feature-list">
+            <li>Radiology Scheduling & Worklists</li>
+            <li>DICOM Image Archiving & Web Viewer</li>
+            <li>Radiologist Reporting & Dictation</li>
+            <li>Study Distribution Across Departments</li>
+          </ul>
+        </div>
+
+        <!-- LIMS -->
+        <div class="card">
+          <span class="card-badge badge-software">Laboratory Workflows</span>
+          <h3 class="card-title">LIMS Platform</h3>
+          <p class="card-desc">Laboratory Information Management for sample tracking, analyzer interfacing, and results.</p>
+          <ul class="feature-list">
+            <li>Sample Barcode Registration & Tracking</li>
+            <li>Automated Analyzer Data Capture</li>
+            <li>Quality Control & Audit Trail</li>
+            <li>Direct Result Delivery to Doctor's EMR</li>
+          </ul>
+        </div>
+
+        <!-- HFMS -->
+        <div class="card">
+          <span class="card-badge badge-software">Facilities</span>
+          <h3 class="card-title">HFMS & SFMS</h3>
+          <p class="card-desc">Hospital & School Facility Management Systems for physical buildings and operational visibility.</p>
+          <ul class="feature-list">
+            <li>Space & Bed Allocation Management</li>
+            <li>Preventive Facility Maintenance</li>
+            <li>Work Order Request & Dispatch System</li>
+            <li>Resource, Utility & Asset Tracking</li>
+          </ul>
+        </div>
+
+        <!-- EMS -->
+        <div class="card">
+          <span class="card-badge badge-integration">Software Bridge</span>
+          <h3 class="card-title">EMS (Equipment Mgmt)</h3>
+          <p class="card-desc">Biomedical Equipment Management Software that tracks every machine's health lifecycle.</p>
+          <ul class="feature-list">
+            <li>Biomedical Equipment Registry & QR Tags</li>
+            <li>Planned Preventive Maintenance (PPM)</li>
+            <li>Calibration Alerts & Service Histories</li>
+            <li>Downtime Tracking & Repair Logging</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- EQUIPMENT SECTION -->
+    <div id="equipment-section" class="category-block">
+      <h2 class="section-title">🏥 Medical Equipment & Clinical Modalities</h2>
+      <p class="section-subtitle">Supplying, installing, and servicing the physical diagnostic and life-support machines.</p>
+      
+      <div class="grid-3col">
+        <!-- Diagnostic Imaging -->
+        <div class="card">
+          <span class="card-badge badge-equipment">Radiology Modalities</span>
+          <h3 class="card-title">Diagnostic Imaging</h3>
+          <p class="card-desc">State-of-the-art diagnostic imaging solutions for accurate and early patient diagnosis.</p>
+          <ul class="feature-list">
+            <li>Fixed & Mobile Digital X-Ray Systems</li>
+            <li>Diagnostic Ultrasound (Color Doppler)</li>
+            <li>CT Scanners & MRI Systems</li>
+            <li>Surgical C-Arm & Fluoroscopy</li>
+          </ul>
+        </div>
+
+        <!-- Laboratory Analyzers -->
+        <div class="card">
+          <span class="card-badge badge-equipment">Diagnostic Laboratory</span>
+          <h3 class="card-title">Laboratory Analyzers</h3>
+          <p class="card-desc">High-precision laboratory instrumentation supporting high-throughput clinical testing.</p>
+          <ul class="feature-list">
+            <li>Automated Hematology Analyzers</li>
+            <li>Clinical Chemistry / Biochemistry Analyzers</li>
+            <li>Coagulation & Electrolyte Analyzers</li>
+            <li>Blood Gas & Immunoassay Systems</li>
+          </ul>
+        </div>
+
+        <!-- Critical Care & Theater -->
+        <div class="card">
+          <span class="card-badge badge-equipment">Life Support & OR</span>
+          <h3 class="card-title">Critical Care & Theater</h3>
+          <p class="card-desc">Essential biomedical equipment for ICUs, Emergency Departments, and Operating Theaters.</p>
+          <ul class="feature-list">
+            <li>Multi-Parameter Patient Monitors</li>
+            <li>ICU & Transport Ventilators</li>
+            <li>Defibrillators (AED & Biphasic)</li>
+            <li>Infusion & Syringe Pumps</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- INTEGRATION DIAGRAM -->
+    <div id="integration-section" class="integration-box category-block">
+      <div class="integ-header">
+        <h3>How Our Software Connects to Equipment</h3>
+        <p>Software First — Connected When Needed. We engineer the exact bridge between data systems and physical devices.</p>
+      </div>
+
+      <div class="integ-flow">
+        <div class="flow-node">
+          <h5>1. Software Layer</h5>
+          <p>EMR / HMIS / RIS / LIMS</p>
+          <small style="color:#94a3b8">Orders, Patients, Results</small>
+        </div>
+
+        <div class="flow-arrow">⇄</div>
+
+        <div class="flow-node" style="border-color: var(--accent);">
+          <h5>2. Integration Engine</h5>
+          <p>DICOM / HL7 / REST APIs</p>
+          <small style="color:var(--accent)">Real-time Data Translation</small>
+        </div>
+
+        <div class="flow-arrow">⇄</div>
+
+        <div class="flow-node">
+          <h5>3. Equipment Layer</h5>
+          <p>CT, MRI, X-Ray, Lab Analyzers</p>
+          <small style="color:#94a3b8">Patient Monitors & Pumps</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT BANNER -->
+    <div class="contact-strip">
+      <div class="contact-details">
+        <h4>Connect with HIL Biomedicals & Systems Ltd</h4>
+        <p>📍 2nd Crescent Link, Abeka-Lapaz, Accra, Ghana</p>
+        <p>📞 Tel: <strong>030-397-2481</strong> &nbsp;|&nbsp; ✉️ <strong>hilbiomedicals@gmail.com</strong></p>
+      </div>
+      <div class="contact-buttons">
+        <a href="https://wa.me/233303972481?text=Hello%20HIL%20Biomedicals,%20I%20would%20like%20to%20discuss%20your%20software%20and%20equipment%20solutions." target="_blank" class="btn-whatsapp">
+          💬 Chat on WhatsApp
+        </a>
+        <a href="tel:0303972481" class="btn-primary">
+          📞 Call Now
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2026 HIL Biomedicals & Systems Ltd. All rights reserved. | 2nd Crescent Link, Abeka-Lapaz, Ghana.</p>
+  </footer>
+
+  <script>
+    function closeModal(target) {
+      document.getElementById('welcomeModal').classList.add('hidden');
+      if (target && target !== 'all') {
+        const el = document.getElementById(target + '-section');
+        if (el) {
+          setTimeout(() => {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }, 200);
+        }
+      }
+    }
+
+    function openModal() {
+      document.getElementById('welcomeModal').classList.remove('hidden');
+    }
+
+    function filterCategory(cat, btn) {
+      document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const software = document.getElementById('software-section');
+      const equipment = document.getElementById('equipment-section');
+      const integration = document.getElementById('integration-section');
+
+      if (cat === 'all') {
+        software.style.display = 'block';
+        equipment.style.display = 'block';
+        integration.style.display = 'block';
+      } else if (cat === 'software') {
+        software.style.display = 'block';
+        equipment.style.display = 'none';
+        integration.style.display = 'none';
+      } else if (cat === 'equipment') {
+        software.style.display = 'none';
+        equipment.style.display = 'block';
+        integration.style.display = 'none';
+      } else if (cat === 'integration') {
+        software.style.display = 'none';
+        equipment.style.display = 'none';
+        integration.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>
