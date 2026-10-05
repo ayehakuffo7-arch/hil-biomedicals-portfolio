@@ -9,566 +9,1009 @@
   <style>
     :root {
       --primary: #0a2540;
+      --primary-dark: #051527;
       --accent: #00d4b2;
+      --accent-dark: #00a88d;
       --secondary: #0066f5;
       --dark: #061527;
       --text: #1e293b;
       --muted: #64748b;
       --border: #e2e8f0;
       --bg-alt: #f8fafc;
+      --card-bg: #ffffff;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       color: var(--text);
-      background: #e2e8f0;
+      background: #cbd5e1;
+      -webkit-font-smoothing: antialiased;
     }
+
     @page {
       size: A4 portrait;
       margin: 0;
     }
+
     .page {
       width: 210mm;
       min-height: 297mm;
       height: 297mm;
-      margin: 10mm auto;
+      margin: 8mm auto;
       background: white;
       position: relative;
       overflow: hidden;
       page-break-after: always;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
     }
+
     @media print {
       body { background: white; }
-      .page { margin: 0; box-shadow: none; width: 100%; height: 100vh; }
+      .page { 
+        margin: 0; 
+        box-shadow: none; 
+        width: 210mm; 
+        height: 297mm;
+        page-break-after: always;
+      }
     }
+
+    /* Standard Page Header */
     .page-header {
-      padding: 24px 32px 16px;
+      padding: 18px 32px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 2px solid var(--border);
+      background: white;
+      flex-shrink: 0;
     }
     .page-header .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .page-header .brand-logo-badge {
+      width: 34px;
+      height: 34px;
+      background: var(--primary);
+      color: var(--accent);
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.15rem;
+      font-weight: 800;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    .page-header .brand-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--primary);
+      line-height: 1.15;
     }
-    .page-header .brand span {
-      color: var(--accent);
-      font-size: 0.75rem;
+    .page-header .brand-text span {
+      color: var(--accent-dark);
+      font-size: 0.72rem;
       font-weight: 600;
       display: block;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
     }
     .page-header .meta {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--muted);
       font-weight: 600;
+      background: var(--bg-alt);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
     }
+
+    /* Standard Page Body */
     .page-body {
-      padding: 36px 36px 20px;
+      padding: 24px 32px 18px;
       flex: 1;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
+
+    /* Standard Page Footer */
     .page-footer {
-      padding: 16px 32px;
+      padding: 12px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid var(--border);
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--muted);
+      background: var(--bg-alt);
+      flex-shrink: 0;
+    }
+    .page-footer span strong {
+      color: var(--primary);
     }
 
-    /* Cover Page (Page 1) */
-    .cover-page {
-      background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 70%, #0d3b66 100%);
-      color: white;
-      justify-content: space-between;
-      padding: 50px 40px;
-    }
-    .cover-badge {
-      display: inline-block;
-      background: rgba(0, 212, 178, 0.15);
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      padding: 8px 20px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 24px;
-    }
-    .cover-title {
+    /* Typography */
+    .section-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 3.2rem;
+      font-size: 1.55rem;
       font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      margin-bottom: 20px;
+      color: var(--primary);
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
     }
-    .cover-title span { color: var(--accent); }
-    .cover-tagline {
-      font-size: 1.35rem;
+    .section-subtitle {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+
+    /* Photo Banner Component */
+    .photo-banner {
+      width: 100%;
+      height: 220px;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      box-shadow: 0 6px 18px rgba(10, 37, 64, 0.12);
+      flex-shrink: 0;
+      background: #0f172a;
+    }
+    .photo-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .photo-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(5, 21, 39, 0.92) 0%, rgba(5, 21, 39, 0.6) 70%, transparent 100%);
+      color: white;
+      padding: 16px 20px 10px;
+      font-size: 0.8rem;
       font-weight: 600;
-      color: #94a3b8;
-      max-width: 580px;
-      margin-bottom: 40px;
-    }
-    .cover-pillars {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-top: 30px;
-    }
-    .cover-box {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 16px;
-      padding: 24px;
-    }
-    .cover-box h4 {
-      font-size: 1.1rem;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-    .cover-box p {
-      font-size: 0.85rem;
-      color: #cbd5e1;
-      line-height: 1.5;
-    }
-    .cover-footer {
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
-      border-top: 1px solid rgba(255,255,255,0.15);
-      padding-top: 24px;
-      font-size: 0.85rem;
-      color: #94a3b8;
+      align-items: center;
+    }
+    .photo-caption-badge {
+      background: var(--accent);
+      color: var(--dark);
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
-    /* Content Styling */
-    .title-h1 {
+    /* Cards & Grids */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .grid-4col {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .info-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s ease;
+    }
+    .info-card.highlight {
+      border-left: 4px solid var(--secondary);
+      background: #f0f7ff;
+    }
+    .info-card.accent-card {
+      border-left: 4px solid var(--accent);
+      background: #f0fdfa;
+    }
+    .card-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 2rem;
+      font-size: 0.98rem;
       font-weight: 700;
       color: var(--primary);
       margin-bottom: 6px;
-    }
-    .lead-p {
-      font-size: 1rem;
-      color: var(--muted);
-      margin-bottom: 28px;
-    }
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    .grid-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 18px;
-    }
-    .card-mod {
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
-    }
-    .card-mod.highlight {
-      border-color: var(--secondary);
-      background: #f0f7ff;
-    }
-    .card-mod h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.18rem;
-      color: var(--primary);
-      margin-bottom: 8px;
-    }
-    .card-mod p {
-      font-size: 0.86rem;
-      color: #475569;
-      margin-bottom: 14px;
-      line-height: 1.45;
-    }
-    .mod-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .mod-features li {
-      font-size: 0.82rem;
-      color: #334155;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .mod-features li::before {
+    .card-desc {
+      font-size: 0.8rem;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .bullet-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: auto;
+    }
+    .bullet-list li {
+      font-size: 0.76rem;
+      color: #334155;
+      padding-left: 14px;
+      position: relative;
+      margin-bottom: 4px;
+      line-height: 1.35;
+    }
+    .bullet-list li::before {
       content: "•";
+      position: absolute;
+      left: 0;
       color: var(--secondary);
-      font-size: 1.3rem;
-      line-height: 0;
+      font-weight: bold;
+      font-size: 1rem;
+      line-height: 1;
     }
 
-    /* Steps */
-    .steps-grid {
+    /* KPI Callout Boxes */
+    .kpi-strip {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+      flex-shrink: 0;
     }
-    .step-box {
-      border-left: 4px solid var(--secondary);
-      padding-left: 16px;
+    .kpi-box {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    .kpi-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--secondary);
+      line-height: 1.1;
+    }
+    .kpi-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+    }
+
+    /* COVER PAGE STYLES (Page 1) */
+    .cover-page {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 65%, #0d3b66 100%);
+      color: white;
+      padding: 36px 36px 30px;
+      justify-content: space-between;
+    }
+    .cover-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cover-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .cover-logo {
+      width: 48px;
+      height: 48px;
+      background: var(--accent);
+      color: var(--dark);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 1.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 212, 178, 0.4);
+    }
+    .cover-brand-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+    .cover-brand-title span {
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      display: block;
+      margin-top: 2px;
+    }
+    .cover-badge {
+      background: rgba(0, 212, 178, 0.15);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .cover-main {
+      margin: 18px 0;
+    }
+    .cover-tagline {
+      color: var(--accent);
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .cover-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
       margin-bottom: 12px;
     }
-    .step-box h4 {
-      font-size: 1.05rem;
-      color: var(--primary);
-      margin-bottom: 4px;
+    .cover-title span {
+      color: var(--accent);
     }
-    .step-box p {
-      font-size: 0.85rem;
-      color: var(--muted);
+    .cover-desc {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      max-width: 600px;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+    .cover-photo-wrapper {
+      width: 100%;
+      height: 380px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+    .cover-photo-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .cover-photo-badge {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: rgba(10, 37, 64, 0.88);
+      backdrop-filter: blur(8px);
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 212, 178, 0.4);
+      color: white;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .cover-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 16px;
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+    .cover-footer strong {
+      color: white;
+    }
+
+    /* BACK COVER / CONTACT (Page 8) */
+    .back-cover-page {
+      background: linear-gradient(145deg, #ffffff 0%, var(--bg-alt) 60%, #e2e8f0 100%);
+      justify-content: space-between;
+      padding: 36px 36px 24px;
+    }
+    .contact-card-box {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(10, 37, 64, 0.08);
+      margin-bottom: 20px;
+    }
+    .qr-showcase {
+      background: white;
+      border: 2px solid var(--accent);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 212, 178, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   </style>
 </head>
 <body>
 
-  <!-- PAGE 1: COVER -->
+  <!-- ========================================== -->
+  <!-- PAGE 1: COVER PAGE                         -->
+  <!-- ========================================== -->
   <div class="page cover-page">
-    <div>
-      <div class="cover-badge">BRIDGING THE ENGINEERING-MEDICINE GAP</div>
-      <h1 class="cover-title">HIL BIOMEDICALS<br><span>& SYSTEMS LTD</span></h1>
-      <p class="cover-tagline">Comprehensive Healthcare Software Solutions & Specialized Medical Equipment Portfolio.</p>
+    <div class="cover-header">
+      <div class="cover-brand">
+        <div class="cover-logo">H</div>
+        <div class="cover-brand-title">
+          HIL BIOMEDICALS
+          <span>& Systems Ltd • Accra, Ghana</span>
+        </div>
+      </div>
+      <div class="cover-badge">Corporate Profile 2026/2027</div>
     </div>
 
-    <div class="cover-pillars">
-      <div class="cover-box">
-        <h4>💻 Software & Digital Health</h4>
-        <p>EMR, HMIS, RIS, PACS, LIMS, and Facility Infrastructure systems connecting clinical and operational workflows.</p>
-      </div>
-      <div class="cover-box">
-        <h4>🏥 Biomedical Equipment</h4>
-        <p>Diagnostic imaging, clinical laboratory instrumentation, patient monitors, ventilators, and surgical systems.</p>
+    <div class="cover-main">
+      <div class="cover-tagline">Bridging the Engineering-Medicine Gap</div>
+      <h1 class="cover-title">Enterprise Healthcare <span>Software & Biomedical</span> Solutions</h1>
+      <p class="cover-desc">Empowering hospitals, diagnostic imaging centers, and clinical laboratories across Ghana and West Africa with unified digital health platforms and precision medical devices.</p>
+      
+      <div class="cover-photo-wrapper">
+        <img src="images/hero_team.jpg" alt="HIL Biomedicals Clinical & Biomedical Engineering Team in Accra, Ghana">
+        <div class="cover-photo-badge">
+          📍 HIL Biomedicals Clinical Team on Site • Accra Medical Centre, Ghana
+        </div>
       </div>
     </div>
 
     <div class="cover-footer">
-      <div>
-        <strong>HIL Biomedicals & Systems Ltd</strong><br>
-        2nd Crescent Link, Abeka-Lapaz, Accra, Ghana
-      </div>
-      <div>
-        Tel: 030-397-2481 | Web: hilbiomedicals.com
-      </div>
+      <div><strong>Headquarters:</strong> Abeka-Lapaz, Accra, Ghana • Tel: +233 30 397 2481</div>
+      <div><strong>Official Portfolio:</strong> github.com/ayehakuffo7-arch</div>
     </div>
   </div>
 
-  <!-- PAGE 2: EXECUTIVE OVERVIEW -->
+  <!-- ========================================== -->
+  <!-- PAGE 2: EXECUTIVE OVERVIEW                 -->
+  <!-- ========================================== -->
   <div class="page">
     <div class="page-header">
-      <div class="brand">HIL BIOMEDICALS & SYSTEMS LTD<span>Software & Digital Health Services</span></div>
-      <div class="meta">Page 2 / 8</div>
+      <div class="brand">
+        <div class="brand-logo-badge">H</div>
+        <div class="brand-text">HIL BIOMEDICALS<span>& Systems Ltd • Ghana</span></div>
+      </div>
+      <div class="meta">Page 02 / 08 • Executive Overview</div>
     </div>
+
     <div class="page-body">
-      <h2 class="title-h1">Executive Portfolio & Vision</h2>
-      <p class="lead-p">Connecting clinical workflows, medical diagnostics, hospital operations, and biomedical assets into a unified healthcare environment.</p>
+      <h2 class="section-title">One Unified Partner for Software & Medical Devices</h2>
+      <p class="section-subtitle">Bridging hospital clinical workflows, diagnostic laboratories, radiology, and physical medical equipment with single-source accountability.</p>
 
-      <div class="grid-2" style="margin-bottom: 24px;">
-        <div class="card-mod highlight">
-          <h3>Software First — Connected When Needed</h3>
-          <p>Our software portfolio stands on its own as a robust, scalable digital health framework. Where patient care requires direct data from medical devices, we engineer the integration layer so your software and medical equipment operate as one synchronized engine.</p>
+      <div class="grid-3col">
+        <div class="info-card highlight">
+          <div class="card-title">💻 Digital Health Systems</div>
+          <p class="card-desc">End-to-end clinical and hospital administrative automation designed for Ghanaian healthcare regulations and NHIS.</p>
+          <ul class="bullet-list">
+            <li>Electronic Medical Records (EMR)</li>
+            <li>Hospital Management System (HMIS)</li>
+            <li>Radiology PACS & Tele-imaging</li>
+            <li>Integrated Diagnostic LIMS</li>
+          </ul>
         </div>
-        <div class="card-mod">
-          <h3>Dual Engineering Synergy</h3>
-          <p>One unified project with two specialist areas: our software division manages patient records, laboratory results, radiology imaging, and maintenance workflows, while our equipment division supplies, commissions, and calibrates the physical clinical modalities.</p>
+
+        <div class="info-card accent-card">
+          <div class="card-title">🏥 Medical Equipment</div>
+          <p class="card-desc">Direct procurement, installation, and commissioning of international-standard medical hardware.</p>
+          <ul class="bullet-list">
+            <li>Diagnostic Digital X-Ray & Ultrasound</li>
+            <li>Critical Care ICU Ventilators & Monitors</li>
+            <li>Operating Theater Lights & Tables</li>
+            <li>Automated Biochemistry Analyzers</li>
+          </ul>
+        </div>
+
+        <div class="info-card highlight">
+          <div class="card-title">⚡ Integration & Maintenance</div>
+          <p class="card-desc">Seamless bidirectional device interfacing backed by certified biomedical calibration engineers.</p>
+          <ul class="bullet-list">
+            <li>Direct HL7 & DICOM 3.0 Device Telemetry</li>
+            <li>Planned Preventive Maintenance (PPM)</li>
+            <li>Traceable Metrology & ISO Calibration</li>
+            <li>Accra Bonded Spare Parts Inventory</li>
+          </ul>
         </div>
       </div>
 
-      <div class="grid-2">
-        <div class="card-mod">
-          <h3>Clinical Information</h3>
-          <p>Digital medical records and hospital administration systems that empower clinical teams to capture, retrieve, and share patient information instantly across departments.</p>
+      <div class="info-card" style="margin-top: 6px; background: #f8fafc; border: 1px solid #cbd5e1;">
+        <div class="card-title">🎯 The HIL Biomedicals Advantage</div>
+        <p class="card-desc">Unlike traditional vendors who supply software without understanding biomedical hardware—or hardware vendors who cannot integrate with your IT systems—HIL Biomedicals delivers a unified engineering ecosystem. Every patient monitor, laboratory analyzer, and X-ray machine connects directly into your clinical records with zero manual transcription errors.</p>
+      </div>
+
+      <div class="kpi-strip">
+        <div class="kpi-box">
+          <div class="kpi-num">99.9%</div>
+          <div class="kpi-label">System Uptime</div>
         </div>
-        <div class="card-mod">
-          <h3>Diagnostics & Imaging</h3>
-          <p>Enterprise imaging archives and laboratory systems supporting radiology and pathology teams with instant study retrieval and analyzer communication.</p>
+        <div class="kpi-box">
+          <div class="kpi-num">100%</div>
+          <div class="kpi-label">HL7 / DICOM Compliant</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-num">&lt; 2 Hrs</div>
+          <div class="kpi-label">Accra Rapid Response</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-num">ISO 13485</div>
+          <div class="kpi-label">Certified Calibration</div>
         </div>
       </div>
     </div>
+
     <div class="page-footer">
-      <span>2nd Crescent Link, Abeka-Lapaz, Ghana</span>
-      <span>Tel: 030-397-2481 • hilbiomedicals@gmail.com</span>
+      <span><strong>HIL Biomedicals & Systems Ltd</strong> • Abeka-Lapaz, Accra, Ghana</span>
+      <span>Executive Overview • Page 2 of 8</span>
     </div>
   </div>
 
-  <!-- PAGE 3: CLINICAL & HOSPITAL SYSTEMS -->
+  <!-- ========================================== -->
+  <!-- PAGE 3: CLINICAL OPERATIONS SUITE          -->
+  <!-- ========================================== -->
   <div class="page">
     <div class="page-header">
-      <div class="brand">HIL BIOMEDICALS & SYSTEMS LTD<span>Clinical Information Systems</span></div>
-      <div class="meta">Page 3 / 8</div>
+      <div class="brand">
+        <div class="brand-logo-badge">H</div>
+        <div class="brand-text">HIL BIOMEDICALS<span>& Systems Ltd • Ghana</span></div>
+      </div>
+      <div class="meta">Page 03 / 08 • Clinical Operations</div>
     </div>
+
     <div class="page-body">
-      <h2 class="title-h1">Hospital & Clinical Information Systems</h2>
-      <p class="lead-p">The core software foundations for patient care coordination and facility operations.</p>
+      <h2 class="section-title">Clinical Systems: EMR, HMIS, RIS & PACS</h2>
+      <p class="section-subtitle">Automating patient documentation, hospital administration, and multi-modality diagnostic radiology reporting.</p>
 
-      <div class="grid-3">
-        <div class="card-mod">
-          <h3>01 EMR</h3>
-          <p><strong>Electronic Medical Records</strong><br>Connects clinical records across all patient touchpoints.</p>
-          <ul class="mod-features">
-            <li>Patient digital registration & charts</li>
-            <li>Consultation & diagnosis records</li>
-            <li>E-Prescriptions & order entry</li>
-            <li>Clinical history & treatment notes</li>
-            <li>Vitals tracking & allergy alerts</li>
+      <div class="photo-banner">
+        <img src="images/radiology_pacs.jpg" alt="HIL Biomedicals Radiologist Diagnostic Reading Suite">
+        <div class="photo-caption">
+          <span>HIL RIS & PACS: High-Resolution DICOM Diagnostics & Multi-Modality Imaging</span>
+          <span class="photo-caption-badge">Radiology Suite</span>
+        </div>
+      </div>
+
+      <div class="grid-3col">
+        <div class="info-card highlight">
+          <div class="card-title">📋 Electronic Medical Records</div>
+          <p class="card-desc">Longitudinal patient records eliminating lost physical folders and tracking clinical history.</p>
+          <ul class="bullet-list">
+            <li>Custom doctor consultation templates</li>
+            <li>Electronic prescriptions & vitals charting</li>
+            <li>Bedside nurse medication administration</li>
+            <li>Full audit logging and access controls</li>
           </ul>
         </div>
 
-        <div class="card-mod">
-          <h3>02 HMIS</h3>
-          <p><strong>Hospital Management Information System</strong><br>Hospital-wide administrative and financial coordination.</p>
-          <ul class="mod-features">
-            <li>Appointments, Admissions & Bed management</li>
-            <li>Billing, Invoicing & Insurance (NHIS)</li>
-            <li>Pharmacy & Store inventory control</li>
-            <li>Departmental shift rostering</li>
-            <li>Executive financial & operational reports</li>
+        <div class="info-card">
+          <div class="card-title">🏥 Hospital Management (HMIS)</div>
+          <p class="card-desc">Centralized patient registration, billing, ward admissions, and cashier reconciliation.</p>
+          <ul class="bullet-list">
+            <li>OPD triage and appointment booking</li>
+            <li>NHIS claims vetting and tariff rules</li>
+            <li>Inpatient ward bed tracking and transfers</li>
+            <li>Automated billing across all services</li>
           </ul>
         </div>
 
-        <div class="card-mod">
-          <h3>03 HFMS</h3>
-          <p><strong>Hospital Facility Management System</strong><br>Managing physical plant, infrastructure, and non-clinical spaces.</p>
-          <ul class="mod-features">
-            <li>Facility asset tracking & room allocation</li>
-            <li>Preventive plant maintenance schedules</li>
-            <li>Digital work orders & repair dispatches</li>
-            <li>Utility & resource consumption tracking</li>
-            <li>Hospital housekeeping workflows</li>
+        <div class="info-card accent-card">
+          <div class="card-title">🩻 RIS & PACS Imaging</div>
+          <p class="card-desc">DICOM 3.0 compliant Picture Archiving & Communication for instant radiologist access.</p>
+          <ul class="bullet-list">
+            <li>Direct capture from X-Ray, CT, MRI & Ultrasound</li>
+            <li>Web-based diagnostic DICOM viewer</li>
+            <li>Structured tele-radiology reporting</li>
+            <li>Secure long-term cloud/local archiving</li>
           </ul>
         </div>
       </div>
     </div>
+
     <div class="page-footer">
-      <span>HIL Biomedicals & Systems Ltd</span>
-      <span>030-397-2481 • Page 3</span>
+      <span><strong>HIL Biomedicals & Systems Ltd</strong> • Abeka-Lapaz, Accra, Ghana</span>
+      <span>Clinical Operations Suite • Page 3 of 8</span>
     </div>
   </div>
 
-  <!-- PAGE 4: DIAGNOSTIC SYSTEMS -->
+  <!-- ========================================== -->
+  <!-- PAGE 4: DIAGNOSTICS & ADMINISTRATIVE SUITE -->
+  <!-- ========================================== -->
   <div class="page">
     <div class="page-header">
-      <div class="brand">HIL BIOMEDICALS & SYSTEMS LTD<span>Diagnostic Information Systems</span></div>
-      <div class="meta">Page 4 / 8</div>
+      <div class="brand">
+        <div class="brand-logo-badge">H</div>
+        <div class="brand-text">HIL BIOMEDICALS<span>& Systems Ltd • Ghana</span></div>
+      </div>
+      <div class="meta">Page 04 / 08 • Diagnostics & Admin</div>
     </div>
+
     <div class="page-body">
-      <h2 class="title-h1">Diagnostic Information Systems</h2>
-      <p class="lead-p">Advanced platforms powering medical imaging, radiology reporting, and clinical laboratories.</p>
+      <h2 class="section-title">Diagnostics & Enterprise: LIMS, HFMS, SFMS & EMS</h2>
+      <p class="section-subtitle">Laboratory analyzer interfacing, revenue leakage prevention, and multi-branch enterprise coordination.</p>
 
-      <div class="grid-3">
-        <div class="card-mod">
-          <h3>01 RIS</h3>
-          <p><strong>Radiology Information Systems</strong><br>Optimizing radiology department workflows from scheduling to report distribution.</p>
-          <ul class="mod-features">
-            <li>Radiology scheduling & patient arrival</li>
-            <li>Modality worklist integration (MWL)</li>
-            <li>Radiologist structured reporting</li>
-            <li>Examination tracking & billing</li>
+      <div class="photo-banner">
+        <img src="images/laboratory_lims.jpg" alt="HIL Biomedicals Automated Clinical Chemistry Laboratory">
+        <div class="photo-caption">
+          <span>HIL LIMS: Direct Bidirectional Interfacing with Automated Chemistry & Hematology Analyzers</span>
+          <span class="photo-caption-badge">Diagnostic Laboratory</span>
+        </div>
+      </div>
+
+      <div class="grid-4col">
+        <div class="info-card accent-card">
+          <div class="card-title">🧪 Laboratory Information (LIMS)</div>
+          <p class="card-desc">Automates diagnostic testing workflows and sample accessioning.</p>
+          <ul class="bullet-list">
+            <li>Barcode sample tracking & positive patient ID</li>
+            <li>Direct ASTM/HL7 analyzer bidirectional data flow</li>
+            <li>Automated doctor notification & signed PDF delivery</li>
           </ul>
         </div>
 
-        <div class="card-mod">
-          <h3>02 PACS</h3>
-          <p><strong>Picture Archiving & Communication System</strong><br>High-speed medical image archiving and diagnostic viewing.</p>
-          <ul class="mod-features">
-            <li>Full DICOM standard compatibility</li>
-            <li>Web-based diagnostic image viewer</li>
-            <li>High-speed retrieval across hospital network</li>
-            <li>Long-term secure image archiving</li>
+        <div class="info-card highlight">
+          <div class="card-title">💰 Financial Management (HFMS)</div>
+          <p class="card-desc">Guards hospital cashflow and eliminates billing revenue leakage.</p>
+          <ul class="bullet-list">
+            <li>Departmental cashier audit trails and reconciliation</li>
+            <li>Real-time NHIS tariff processing & claims tracker</li>
+            <li>Procurement, general ledger & payroll integration</li>
           </ul>
         </div>
 
-        <div class="card-mod">
-          <h3>03 LIMS</h3>
-          <p><strong>Laboratory Information Management System</strong><br>Automating pathology and laboratory testing pipelines.</p>
-          <ul class="mod-features">
-            <li>Sample barcoding & accessioning</li>
-            <li>Direct analyzer bidirectional interfacing</li>
-            <li>Automated QC and audit trails</li>
-            <li>Immediate result delivery into EMR</li>
+        <div class="info-card">
+          <div class="card-title">🔧 Smart Facility Management (SFMS)</div>
+          <p class="card-desc">Protects medical equipment investments and physical plant assets.</p>
+          <ul class="bullet-list">
+            <li>Biomedical asset registry with maintenance histories</li>
+            <li>Automated calibration and PPM schedule alerts</li>
+            <li>Breakdown ticketing and spare parts inventory</li>
+          </ul>
+        </div>
+
+        <div class="info-card highlight">
+          <div class="card-title">🌐 Enterprise Medical Suite (EMS)</div>
+          <p class="card-desc">Consolidates multi-facility hospital chains and health networks.</p>
+          <ul class="bullet-list">
+            <li>Centralized patient record across all branches</li>
+            <li>Executive BI dashboards & bed occupancy analytics</li>
+            <li>Ministry of Health & GHS regulatory reporting</li>
           </ul>
         </div>
       </div>
     </div>
+
     <div class="page-footer">
-      <span>HIL Biomedicals & Systems Ltd</span>
-      <span>030-397-2481 • Page 4</span>
+      <span><strong>HIL Biomedicals & Systems Ltd</strong> • Abeka-Lapaz, Accra, Ghana</span>
+      <span>Diagnostics & Administrative Suite • Page 4 of 8</span>
     </div>
   </div>
 
-  <!-- PAGE 5: EQUIPMENT & ASSET MANAGEMENT -->
+  <!-- ========================================== -->
+  <!-- PAGE 5: MEDICAL EQUIPMENT & HARDWARE       -->
+  <!-- ========================================== -->
   <div class="page">
     <div class="page-header">
-      <div class="brand">HIL BIOMEDICALS & SYSTEMS LTD<span>Equipment & Facilities Management</span></div>
-      <div class="meta">Page 5 / 8</div>
+      <div class="brand">
+        <div class="brand-logo-badge">H</div>
+        <div class="brand-text">HIL BIOMEDICALS<span>& Systems Ltd • Ghana</span></div>
+      </div>
+      <div class="meta">Page 05 / 08 • Medical Devices & Hardware</div>
     </div>
+
     <div class="page-body">
-      <h2 class="title-h1">Biomedical Equipment & Facility Assets</h2>
-      <p class="lead-p">Managing the operational lifecycle, maintenance schedules, and uptime of clinical machines.</p>
+      <h2 class="section-title">Medical Equipment & Hardware Solutions</h2>
+      <p class="section-subtitle">Turnkey clinical equipment provisioning, installation, and commissioning for modern hospital departments.</p>
 
-      <div class="grid-2">
-        <div class="card-mod highlight">
-          <h3>01 EMS — Equipment Management Systems</h3>
-          <p>The critical software bridge that tracks and protects every physical biomedical device in your hospital.</p>
-          <ul class="mod-features">
-            <li>Comprehensive medical equipment registry with QR tags</li>
-            <li>Planned Preventive Maintenance (PPM) automated scheduling</li>
-            <li>Calibration records & safety compliance certification</li>
-            <li>Fault reporting, repair ticketing & downtime monitoring</li>
-            <li>Depreciation, total cost of ownership & lifecycle records</li>
+      <div class="grid-2col">
+        <div class="info-card highlight">
+          <div class="card-title">🩻 Diagnostic Medical Imaging</div>
+          <p class="card-desc">High-clarity radiological imaging equipment engineered for durability and low operating cost.</p>
+          <ul class="bullet-list">
+            <li><strong>Digital Radiography (DR) X-Ray:</strong> Floor-mounted & ceiling suspension systems with high-resolution Flat Panel Detectors (FPD).</li>
+            <li><strong>Ultrasound Diagnostic Systems:</strong> 3D/4D Color Doppler with cardiac, obstetric, and abdominal multi-frequency probes.</li>
+            <li><strong>Surgical C-Arm & Mobile X-Ray:</strong> Real-time intraoperative fluoroscopy for orthopedic and theater surgery.</li>
           </ul>
         </div>
 
-        <div class="card-mod">
-          <h3>02 SFMS — School & Campus Facilities</h3>
-          <p>Specialized facility management software designed for educational institutions, medical schools, and labs.</p>
-          <ul class="mod-features">
-            <li>Campus building, classroom, and lab space allocation</li>
-            <li>Preventive structural and equipment maintenance</li>
-            <li>Asset and inventory tracking across departments</li>
-            <li>Service requests and work order resolution workflows</li>
+        <div class="info-card accent-card">
+          <div class="card-title">🫁 Critical Care & ICU Life Support</div>
+          <p class="card-desc">Reliable physiological life support instrumentation for Intensive Care Units and emergency wards.</p>
+          <ul class="bullet-list">
+            <li><strong>ICU Mechanical Ventilators:</strong> Advanced invasive/non-invasive ventilation modes with integrated turbine drive.</li>
+            <li><strong>Multi-Parameter Patient Monitors:</strong> 12.1" touch screens tracking ECG, SpO2, NIBP, Respiration, Temperature & EtCO2.</li>
+            <li><strong>Syringe & Infusion Pumps:</strong> Micro-infusion volumetric pumps with anti-bolus safety alarms.</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <div class="card-title">🔬 Clinical Diagnostic Laboratory</div>
+          <p class="card-desc">Automated clinical instrumentation with built-in digital interfaces for rapid throughput.</p>
+          <ul class="bullet-list">
+            <li><strong>Automated Biochemistry Analyzers:</strong> 200–400 tests/hour with refrigerated reagent compartments and barcode readers.</li>
+            <li><strong>5-Part Differential Hematology Analyzers:</strong> Comprehensive complete blood count (CBC) with laser flow cytometry.</li>
+            <li><strong>Electrolyte & Blood Gas Analyzers:</strong> Direct ISE measurement for emergency and critical care panels.</li>
+          </ul>
+        </div>
+
+        <div class="info-card highlight">
+          <div class="card-title">🏥 Surgical & Operating Theater</div>
+          <p class="card-desc">Surgical infrastructure designed for sterility, precision, and surgical team comfort.</p>
+          <ul class="bullet-list">
+            <li><strong>LED Shadowless Operating Lights:</strong> Dual-arm surgical lighting with cold light technology and intensity memory.</li>
+            <li><strong>Electro-Hydraulic Operating Tables:</strong> Multi-position surgical beds suitable for general, ortho, and neurosurgery.</li>
+            <li><strong>Electrosurgical Units (Diathermy):</strong> Monopolar and bipolar cutting/coagulation with contact monitoring.</li>
           </ul>
         </div>
       </div>
+
+      <div class="info-card" style="margin-top: 4px; background: #f0fdfa; border: 1px solid var(--accent);">
+        <div class="card-title" style="color: var(--dark);">🛡️ Quality Assurance & Global Standards Compliance</div>
+        <p class="card-desc" style="margin-bottom: 0;">Every medical device supplied by HIL Biomedicals is internationally certified (CE Marked, US FDA Listed, ISO 13485) and backed by local warranty, OEM spare parts, and on-site engineering support based in Accra, Ghana.</p>
+      </div>
     </div>
+
     <div class="page-footer">
-      <span>HIL Biomedicals & Systems Ltd</span>
-      <span>030-397-2481 • Page 5</span>
+      <span><strong>HIL Biomedicals & Systems Ltd</strong> • Abeka-Lapaz, Accra, Ghana</span>
+      <span>Medical Equipment Solutions • Page 5 of 8</span>
     </div>
   </div>
 
-  <!-- PAGE 6: INTEGRATION ARCHITECTURE -->
+  <!-- ========================================== -->
+  <!-- PAGE 6: DEVICE INTEGRATION ARCHITECTURE    -->
+  <!-- ========================================== -->
   <div class="page">
     <div class="page-header">
-      <div class="brand">HIL BIOMEDICALS & SYSTEMS LTD<span>System Architecture & Integration</span></div>
-      <div class="meta">Page 6 / 8</div>
+      <div class="brand">
+        <div class="brand-logo-badge">H</div>
+        <div class="brand-text">HIL BIOMEDICALS<span>& Systems Ltd • Ghana</span></div>
+      </div>
+      <div class="meta">Page 06 / 08 • Systems Integration Architecture</div>
     </div>
+
     <div class="page-body">
-      <h2 class="title-h1">How Software Connects to Equipment</h2>
-      <p class="lead-p">The software remains the control center; physical equipment connects seamlessly where data translation adds clinical value.</p>
+      <h2 class="section-title">Hardware-to-Software Device Integration</h2>
+      <p class="section-subtitle">Real-time physiological telemetry, automated analyzer data transfer, and elimination of manual transcription.</p>
 
-      <div class="card-mod" style="margin-bottom: 24px;">
-        <h3>The Integrated Health Ecosystem</h3>
-        <p>By connecting software standards (HL7, DICOM, REST APIs) with clinical devices, your hospital eliminates manual transcription errors, accelerates diagnosis, and ensures 100% data traceability.</p>
+      <div class="info-card" style="background: linear-gradient(135deg, #0a2540 0%, #1e3a8a 100%); color: white; margin-bottom: 16px; border: none;">
+        <div class="card-title" style="color: var(--accent); font-size: 1.1rem;">⚡ The HIL Interoperability Pipeline</div>
+        <p class="card-desc" style="color: #e2e8f0; font-size: 0.85rem;">Clinical data flows seamlessly from the physical patient bedside into the hospital electronic medical record via standardized protocol translation gateways.</p>
       </div>
 
-      <div class="grid-2">
-        <div class="card-mod">
-          <h3>Imaging Modalities $\rightarrow$ RIS/PACS</h3>
-          <p>CT, MRI, Digital X-Ray, Ultrasound, and C-Arm systems feed diagnostic images directly into PACS while pulling patient worklists from RIS.</p>
+      <div class="grid-2col" style="gap: 14px;">
+        <div class="info-card highlight">
+          <div class="card-title">1️⃣ Medical Device Layer</div>
+          <p class="card-desc">Patient monitors, ventilators, infusion pumps, blood analyzers, and digital X-ray machines generate clinical measurements.</p>
+          <ul class="bullet-list">
+            <li>Bedside patient vital signs telemetry</li>
+            <li>Biochemistry and hematology result arrays</li>
+            <li>Radiological DICOM image datasets</li>
+          </ul>
         </div>
-        <div class="card-mod">
-          <h3>Laboratory Analyzers $\rightarrow$ LIMS</h3>
-          <p>Automated Hematology, Biochemistry, and Electrolyte analyzers transmit test results directly into LIMS and doctor EMR charts.</p>
+
+        <div class="info-card accent-card">
+          <div class="card-title">2️⃣ HIL Integration Gateway</div>
+          <p class="card-desc">Standardized protocol translation engine operating locally on the hospital network.</p>
+          <ul class="bullet-list">
+            <li>HL7 v2.x and FHIR protocol parser</li>
+            <li>ASTM 1381/1394 laboratory interfacing</li>
+            <li>DICOM C-STORE, C-FIND & Worklist integration</li>
+          </ul>
         </div>
-        <div class="card-mod">
-          <h3>Patient Monitors $\rightarrow$ EMR</h3>
-          <p>Vital signs from bedside monitors, pulse oximeters, and ICU ventilators can be streamed into digital nursing observation flowsheets.</p>
+
+        <div class="info-card accent-card">
+          <div class="card-title">3️⃣ Hospital EMR / Database Core</div>
+          <p class="card-desc">Unified clinical database storing longitudinal patient encounters with cryptographic integrity.</p>
+          <ul class="bullet-list">
+            <li>Automated real-time vitals plotting on patient chart</li>
+            <li>Critical panic value alerts to doctor smartphones</li>
+            <li>Automatic billing ledger creation upon test execution</li>
+          </ul>
         </div>
-        <div class="card-mod">
-          <h3>Biomedical Devices $\rightarrow$ EMS</h3>
-          <p>Every clinical device is logged in the EMS software database for routine PPM calibration, service logs, and maintenance alerts.</p>
+
+        <div class="info-card highlight">
+          <div class="card-title">4️⃣ Clinical & Administrative Touchpoints</div>
+          <p class="card-desc">Instant secure access across desktop workstations, tablets, and nursing monitors.</p>
+          <ul class="bullet-list">
+            <li>Doctor tablets during ward rounds</li>
+            <li>Central ICU nursing station multi-bed overview</li>
+            <li>Hospital executive revenue and occupancy analytics</li>
+          </ul>
         </div>
+      </div>
+
+      <div class="info-card" style="margin-top: 10px; background: #f8fafc; border: 1px solid var(--border);">
+        <div class="card-title">📈 Clinical Impact of Device Interoperability</div>
+        <p class="card-desc" style="margin-bottom: 0;">Eliminates transcription errors by 100%, slashes laboratory result turnaround time from hours to seconds, and ensures that every medical procedure performed is automatically billed without cash leakage.</p>
       </div>
     </div>
+
     <div class="page-footer">
-      <span>HIL Biomedicals & Systems Ltd</span>
-      <span>030-397-2481 • Page 6</span>
+      <span><strong>HIL Biomedicals & Systems Ltd</strong> • Abeka-Lapaz, Accra, Ghana</span>
+      <span>Integration Architecture • Page 6 of 8</span>
     </div>
   </div>
 
-  <!-- PAGE 7: IMPLEMENTATION LIFECYCLE -->
+  <!-- ========================================== -->
+  <!-- PAGE 7: PREVENTIVE MAINTENANCE & CALIBRATION-->
+  <!-- ========================================== -->
   <div class="page">
     <div class="page-header">
-      <div class="brand">HIL BIOMEDICALS & SYSTEMS LTD<span>Implementation & Support</span></div>
-      <div class="meta">Page 7 / 8</div>
+      <div class="brand">
+        <div class="brand-logo-badge">H</div>
+        <div class="brand-text">HIL BIOMEDICALS<span>& Systems Ltd • Ghana</span></div>
+      </div>
+      <div class="meta">Page 07 / 08 • Biomedical Engineering Services</div>
     </div>
+
     <div class="page-body">
-      <h2 class="title-h1">6-Stage Implementation & Support</h2>
-      <p class="lead-p">From initial workflow consultation to live deployment, staff training, and continuous technical support.</p>
+      <h2 class="section-title">Preventive Maintenance, Calibration & Field Support</h2>
+      <p class="section-subtitle">Dedicated biomedical engineering technical division protecting hospital assets and patient safety.</p>
 
-      <div class="steps-grid">
-        <div class="step-box">
-          <h4>01. Assess & Consult</h4>
-          <p>We review your clinical workflows, patient volumes, existing infrastructure, and departmental needs.</p>
+      <div class="photo-banner">
+        <img src="images/biomedical_engineer.jpg" alt="HIL Biomedicals Certified Engineer Performing Calibration">
+        <div class="photo-caption">
+          <span>HIL Biomedical Workshop: Electrical Safety Testing & Calibration on Patient Monitors & Ventilators</span>
+          <span class="photo-caption-badge">Biomedical Engineering</span>
         </div>
-        <div class="step-box">
-          <h4>02. Solution Design</h4>
-          <p>Customizing software modules, access permissions, billing codes, and hardware connectivity.</p>
+      </div>
+
+      <div class="grid-3col">
+        <div class="info-card highlight">
+          <div class="card-title">🛠️ Planned Maintenance (PPM)</div>
+          <p class="card-desc">Proactive scheduled inspections preventing costly catastrophic equipment breakdowns.</p>
+          <ul class="bullet-list">
+            <li>Electrical safety testing (IEC 60601-1)</li>
+            <li>Filter, O-ring, and sensor replacements</li>
+            <li>Mechanical lubrication and pneumatic tuning</li>
+            <li>Comprehensive inspection logbooks</li>
+          </ul>
         </div>
-        <div class="step-box">
-          <h4>03. Configure & Install</h4>
-          <p>Setting up servers, digital workflows, forms, user accounts, and hospital management dashboards.</p>
+
+        <div class="info-card accent-card">
+          <div class="card-title">⚖️ ISO Traceable Calibration</div>
+          <p class="card-desc">Metrology testing verifying diagnostic accuracy and treatment safety margins.</p>
+          <ul class="bullet-list">
+            <li>Ventilator volume and pressure calibration</li>
+            <li>Defibrillator discharge energy verification</li>
+            <li>Patient monitor NIBP & ECG simulation</li>
+            <li>Official compliance certificates for accreditation</li>
+          </ul>
         </div>
-        <div class="step-box">
-          <h4>04. Device Integration</h4>
-          <p>Connecting diagnostic imaging modalities, lab analyzers, and medical machines to the data network.</p>
+
+        <div class="info-card highlight">
+          <div class="card-title">🚨 24/7 Field Engineering Support</div>
+          <p class="card-desc">Rapid on-site emergency repair backed by an inventory of genuine spare parts.</p>
+          <ul class="bullet-list">
+            <li>Bonded parts depot in Accra for zero delay</li>
+            <li>Guaranteed rapid on-site arrival times</li>
+            <li>Temporary loaner units for critical ICU care</li>
+            <li>Hospital clinical engineering staff training</li>
+          </ul>
         </div>
-        <div class="step-box">
-          <h4>05. Clinical Staff Training</h4>
-          <p>Hands-on training for doctors, nurses, lab technicians, radiologists, and administrative teams.</p>
+      </div>
+
+      <div class="kpi-strip" style="margin-top: 6px;">
+        <div class="kpi-box">
+          <div class="kpi-num">ISO 13485</div>
+          <div class="kpi-label">Quality Certified</div>
         </div>
-        <div class="step-box">
-          <h4>06. 24/7 SLA Support</h4>
-          <p>Local Ghana technical support, preventive software updates, routine troubleshooting, and enhancements.</p>
+        <div class="kpi-box">
+          <div class="kpi-num">IEC 60601</div>
+          <div class="kpi-label">Electrical Safety</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-num">24 / 7</div>
+          <div class="kpi-label">On-Call Support</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-num">100%</div>
+          <div class="kpi-label">Accreditation Ready</div>
         </div>
       </div>
     </div>
+
     <div class="page-footer">
-      <span>HIL Biomedicals & Systems Ltd</span>
-      <span>030-397-2481 • Page 7</span>
+      <span><strong>HIL Biomedicals & Systems Ltd</strong> • Abeka-Lapaz, Accra, Ghana</span>
+      <span>Biomedical Engineering Services • Page 7 of 8</span>
     </div>
   </div>
 
-  <!-- PAGE 8: CONTACT & QR PORTFOLIO -->
-  <div class="page">
-    <div class="page-header">
-      <div class="brand">HIL BIOMEDICALS & SYSTEMS LTD<span>Get In Touch</span></div>
-      <div class="meta">Page 8 / 8</div>
+  <!-- ========================================== -->
+  <!-- PAGE 8: CORPORATE HQ, ENGAGEMENT & QR CODE -->
+  <!-- ========================================== -->
+  <div class="page back-cover-page">
+    <div class="page-header" style="background: transparent; border-bottom: 2px solid #cbd5e1;">
+      <div class="brand">
+        <div class="brand-logo-badge">H</div>
+        <div class="brand-text">HIL BIOMEDICALS<span>& Systems Ltd • Accra, Ghana</span></div>
+      </div>
+      <div class="meta">Page 08 / 08 • Corporate HQ & Consultation</div>
     </div>
-    <div class="page-body" style="align-items: center; text-align: center; justify-content: center;">
-      <h2 class="title-h1" style="font-size: 2.4rem; margin-bottom: 12px;">Let's Build a Connected Healthcare System</h2>
-      <p class="lead-p" style="max-width: 580px; margin-bottom: 30px;">
-        Scan the QR code below with your smartphone camera to access our live interactive software and equipment portfolio, view live demos, and select solutions.
-      </p>
 
-      <div style="background: white; border: 3px solid var(--primary); padding: 18px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 220px; margin-bottom: 24px;">
-        <img src="qr_code.png" alt="Scan for Live Interactive Portfolio" style="width: 180px; height: 180px; display: block; margin: 0 auto; border-radius: 12px;">
-        <div style="margin-top: 10px; font-weight: 800; font-size: 0.82rem; color: var(--primary); text-transform: uppercase;">Scan For Live Portfolio</div>
+    <div class="page-body" style="justify-content: center; align-items: center; text-align: center;">
+      <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 8px;">Partner With Ghana’s Premier Healthcare Engineering Provider</h2>
+      <p class="section-subtitle" style="max-width: 600px; margin-bottom: 24px;">Whether establishing a new healthcare facility, upgrading clinical EMR systems, or procuring certified medical equipment, HIL Biomedicals & Systems Ltd delivers proven engineering excellence.</p>
+
+      <div class="contact-card-box" style="width: 100%; max-width: 620px; text-align: left;">
+        <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+          📍 Corporate Headquarters & Contact Channels
+        </h3>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; font-size: 0.84rem;">
+          <div>
+            <strong style="color: var(--primary);">Physical Address:</strong><br>
+            HIL Biomedicals & Systems Ltd<br>
+            Abeka-Lapaz, Accra, Ghana
+          </div>
+          <div>
+            <strong style="color: var(--primary);">Direct Telephone:</strong><br>
+            +233 30 397 2481<br>
+            Available Mon–Sat: 8:00 AM – 6:00 PM
+          </div>
+          <div>
+            <strong style="color: var(--primary);">Electronic Mail:</strong><br>
+            info@hilbiomedicals.com<br>
+            support@hilbiomedicals.com
+          </div>
+          <div>
+            <strong style="color: var(--primary);">Corporate Portal:</strong><br>
+            hilbiomedicals.com<br>
+            Serving Ghana & West Africa
+          </div>
+        </div>
       </div>
 
-      <div style="max-width: 500px; font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin-bottom: 30px;">
-        📍 <strong>2nd Crescent Link, Abeka-Lapaz, Accra, Ghana</strong><br>
-        📞 <strong>Tel:</strong> 030-397-2481 &nbsp;|&nbsp; ✉️ <strong>Email:</strong> hilbiomedicals@gmail.com<br>
-        🌐 <strong>Web:</strong> hilbiomedicals.com
-      </div>
-
-      <div style="background: var(--bg-alt); padding: 16px 28px; border-radius: 999px; border: 1px solid var(--border); font-size: 0.85rem; font-weight: 700; color: var(--primary);">
-        EMR • HMIS • RIS • PACS • LIMS • HFMS • SFMS • EMS
+      <div class="qr-showcase" style="width: 100%; max-width: 440px;">
+        <span style="background: var(--primary); color: var(--accent); font-size: 0.72rem; font-weight: 800; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 10px;">
+          Scan with Mobile Camera
+        </span>
+        <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; color: var(--primary); margin-bottom: 6px;">
+          Official Interactive Digital Portfolio
+        </h3>
+        <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 14px; max-width: 340px;">
+          Scan this QR code to explore the live interactive portfolio, view system specifications, and inspect code on GitHub:
+        </p>
+        
+        <img src="qr_code.png" alt="Scan QR Code for HIL Biomedicals Portfolio" style="width: 175px; height: 175px; display: block; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+        
+        <div style="margin-top: 12px; font-size: 0.75rem; color: var(--secondary); font-weight: 700; word-break: break-all;">
+          https://ayehakuffo7-arch.github.io/hil-biomedicals-portfolio/
+        </div>
       </div>
     </div>
-    <div class="page-footer">
-      <span>HIL Biomedicals & Systems Ltd</span>
-      <span>030-397-2481 • Page 8</span>
+
+    <div class="page-footer" style="background: transparent; border-top: 1px solid #cbd5e1;">
+      <span><strong>HIL Biomedicals & Systems Ltd</strong> • Abeka-Lapaz, Accra, Ghana</span>
+      <span>Official Corporate Publication • Page 8 of 8</span>
     </div>
   </div>
 
