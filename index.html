@@ -243,15 +243,12 @@
     .logo-symbol {
       width: 44px;
       height: 44px;
-      background: linear-gradient(135deg, var(--accent), var(--secondary));
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 1.3rem;
-      color: var(--dark);
-      font-family: 'Space Grotesk', sans-serif;
+      border-radius: 10px;
+      object-fit: cover;
+      display: block;
+      box-shadow: 0 4px 12px rgba(0, 212, 178, 0.25);
+      border: 1px solid rgba(0, 212, 178, 0.3);
+      flex-shrink: 0;
     }
 
     .brand-title {
@@ -770,7 +767,7 @@
   <header>
     <div class="nav-bar">
       <a href="#" class="brand-logo">
-        <div class="logo-symbol">H</div>
+        <img src="images/hil_logo.png" class="logo-symbol" alt="HIL Biomedicals Logo">
         <div class="brand-title">
           HIL BIOMEDICALS
           <span>& Systems Ltd • Ghana</span>
